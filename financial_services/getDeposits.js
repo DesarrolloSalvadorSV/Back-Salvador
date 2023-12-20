@@ -1,22 +1,21 @@
+// Importaciones
 const fetch = require('node-fetch');
-const { parse } = require('cookie');
+const { getUniqueUserApiKey } = require('../registration_login_services/login');
 const { transformDateCreation } = require('../formatting_services/transformDateFormat');
 
-async function getDeposits(req) {
+// Obtener los depositos por IdentityId
+async function getDeposits() {
+  const userApiKey = getUniqueUserApiKey();
+  const apiUrl = `https://api.orangepill.cloud/v1/transactions/all?scope=-own,incoming&query={"type":"deposit"}`;
+
+  const fetchOptions = {
+    method: 'GET',
+    headers: {
+      'x-api-key': userApiKey,
+    },
+  };
+
   try {
-    // Obtener la cookie del request (req)
-    const cookies = parse(req.headers.cookie || '');
-    const userApiKey = cookies.userApiKey || '';
-
-    const apiUrl = `https://api.orangepill.cloud/v1/transactions/all?scope=-own,incoming&query={"type":"deposit"}`;
-
-    const fetchOptions = {
-      method: 'GET',
-      headers: {
-        'x-api-key': userApiKey,
-      },
-    };
-
     const response = await fetch(apiUrl, fetchOptions);
 
     if (!response.ok) {
@@ -31,7 +30,7 @@ async function getDeposits(req) {
     return dataWithTransformedDate;
   } catch (error) {
     console.error('Error en la solicitud FETCH:', error.message);
-    throw error;
+    throw error; 
   }
 }
 
