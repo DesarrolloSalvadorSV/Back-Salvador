@@ -20,14 +20,12 @@ async function login(username, password, res) {
     const responseGetIdentity = await fetch(apiUrlGetIdentity, fetchOptionsGetIdentity);
 
     if (responseGetIdentity.ok) {
-
-      console.log("Respuesta Exitosa");
+      console.log("Respuesta exitosa. Estableciendo cookie...", userApiKey);
 
       // Configura la cookie independientemente del valor de res
       const userApiKeyCookie = serialize('userApiKey', userApiKey, {
         httpOnly: true,
         secure: true,  // Trabajar en entornos de producción
-        //secure: false, // Siempre en entornos locales es FALSE
         sameSite: 'None',
         maxAge: 3600,
         path: '/',
@@ -36,13 +34,14 @@ async function login(username, password, res) {
 
       // Verifica que res esté definido antes de intentar usarlo
       if (res && typeof res.setHeader === 'function') {
+        console.log("Entrando en res y setHeader function");
         // Establece la cookie en la respuesta (res) si res está presente
         res.setHeader('Set-Cookie', userApiKeyCookie);
         return {
           success: true,
         };
       } else {
-        console.log("No se logró configurar la cookie");
+        console.log("No se logró configurar la cookie. 'res' no es válido.");
       }
     } else {
       console.error(`Error de red: ${responseGetIdentity.status}`);
