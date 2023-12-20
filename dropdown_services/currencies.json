@@ -1,0 +1,7 @@
+{
+  "currencies": [
+    {"name": "USD"},
+    {"name": "EUR"},
+    {"name": "COP"}
+  ]
+}

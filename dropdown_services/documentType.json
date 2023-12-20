@@ -1,0 +1,9 @@
+{
+    "documentType": [
+      {"name": "Cédula nacional"},
+      {"name": "Cédula de extranjería"},
+      {"name": "Licencia de conducir"},
+      {"name": "Número de seguro social"},
+      {"name": "Documento único de identidad"}
+    ]
+}
