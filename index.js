@@ -2,11 +2,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
+
 const verification = require('./verification_services/verification');
 const deleteDocument = require('./verification_services/deleteDocument');
 const deleteFolder = require('./verification_services/deleteFolder');
 const userRegistration = require('./registration_login_services/userRegistration');
-const { login, getGlobalIdentityId, getUniqueUserApiKey } = require('./registration_login_services/login');
+const { login } = require('./registration_login_services/login');
 const getDeposits = require('./financial_services/getDeposits');
 const getWithdrawals = require('./financial_services/getWithdrawals');
 const getSentTransactions = require('./financial_services/getSentTransactions');
@@ -20,8 +23,13 @@ const port = process.env.PORT || 3000;
 
 // Middleware para manejar solicitudes JSON
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://clientes.salvadorsv.com',
+  credentials: true,
+}));
 app.use(bodyParser.json());
+app.use(cookieParser());
+
 
 // Rutas
 
@@ -68,7 +76,7 @@ app.get('/login', async (req, res) => {
   const password = req.query.password;
 
   try {
-    const userData = await login(username, password);
+    const userData = await login(username, password, res);
 
     if (userData) {
       res.status(200).json(userData);
@@ -85,18 +93,18 @@ app.get('/login', async (req, res) => {
 // Ruta para obtener los depositos
 app.get('/get-deposits', async (req, res) => {
   try {
-    const transactions = await getDeposits();
+    const transactions = await getDeposits(req);
     res.json(transactions);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error en la solicitud GET de transacciones.');
+    res.status(500).send('Error en la solicitud GET de depositos.');
   }
 });
 
 // Ruta para obtener los retiros
 app.get('/get-withdrawals', async (req, res) => {
   try {
-    const withdrawals = await getWithdrawals();
+    const withdrawals = await getWithdrawals(req);
     res.json(withdrawals);
   } catch (error) {
     console.error(error);
@@ -107,7 +115,7 @@ app.get('/get-withdrawals', async (req, res) => {
 // Ruta para obtener las transacciones enviadas
 app.get('/get-send-transactions', async (req, res) => {
   try {
-    const sendsFrom = await getSentTransactions();
+    const sendsFrom = await getSentTransactions(req);
     res.json(sendsFrom);
   } catch (error) {
     console.error(error);
@@ -118,7 +126,7 @@ app.get('/get-send-transactions', async (req, res) => {
 // Ruta para obtener las transacciones recibidas
 app.get('/get-received-transactions', async (req, res) => {
   try {
-    const sendsTo = await getReceivedTransactions();
+    const sendsTo = await getReceivedTransactions(req);
     res.json(sendsTo);
   } catch (error) {
     console.error(error);
@@ -181,3 +189,4 @@ app.get('/international-codes', async (req, res) => {
 app.listen(port, () => {
   console.log('Servidor escuchando en', port);
 });
+

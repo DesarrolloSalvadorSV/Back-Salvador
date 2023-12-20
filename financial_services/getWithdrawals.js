@@ -1,22 +1,23 @@
 // Importaciones
 const fetch = require('node-fetch');
-const { getUniqueUserApiKey } = require('../registration_login_services/login')
+const { parse } = require('cookie');
 const { transformDateCreation } = require('../formatting_services/transformDateFormat');
 
-// Obtener los retiros por IdentityId
-async function getWithdrawals() {
-  const userApiKey = getUniqueUserApiKey();
-
-  const apiUrl = `https://api.orangepill.cloud/v1/transactions/all?scope=-own,outgoing&query={"type":"withdrawal"}`;
-
-  const fetchOptions = {
-    method: 'GET',
-    headers: {
-      'x-api-key': userApiKey,
-    },
-  };
-
+async function getWithdrawals(req) {
   try {
+    // Obtener la cookie del request (req)
+    const cookies = parse(req.headers.cookie || '');
+    const userApiKey = cookies.userApiKey || '';
+
+    const apiUrl = 'https://api.orangepill.cloud/v1/transactions/all?scope=-own,outgoing&query={"type":"withdrawal"}';
+
+    const fetchOptions = {
+      method: 'GET',
+      headers: {
+        'x-api-key': userApiKey,
+      },
+    };
+
     const response = await fetch(apiUrl, fetchOptions);
 
     if (!response.ok) {
@@ -30,9 +31,9 @@ async function getWithdrawals() {
 
     return dataWithTransformedDate;
   } catch (error) {
-    throw new Error('Error en la solicitud FETCH:', error);
+    console.error('Error en la solicitud FETCH:', error.message);
+    throw error;
   }
 }
-
 
 module.exports = getWithdrawals;
