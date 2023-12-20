@@ -30,12 +30,6 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// Middleware para configurar Access-Control-Allow-Credentials en todas las respuestas CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://clientes.salvadorsv.com');
-  res.header('Access-Control-Allow-Credentials', true);
-  next();
-});
 
 // Rutas
 
