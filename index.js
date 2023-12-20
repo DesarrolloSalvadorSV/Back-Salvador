@@ -24,7 +24,7 @@ const port = process.env.PORT || 3000;
 // Middleware para manejar solicitudes JSON
 app.use(express.json());
 app.use(cors({
-  origin: 'https://clientes.salvadorsv.com',
+  origin: 'clientes.salvadorsv.com',
   credentials: true,
 }));
 app.use(bodyParser.json());

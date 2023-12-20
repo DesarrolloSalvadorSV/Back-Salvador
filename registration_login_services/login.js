@@ -20,12 +20,15 @@ async function login(username, password, res) {
     const responseGetIdentity = await fetch(apiUrlGetIdentity, fetchOptionsGetIdentity);
 
     if (responseGetIdentity.ok) {
+
+      console.log("Respuesta Exitosa");
+
       // Configura la cookie independientemente del valor de res
       const userApiKeyCookie = serialize('userApiKey', userApiKey, {
         httpOnly: true,
         secure: true,  // Trabajar en entornos de producción
         //secure: false, // Siempre en entornos locales es FALSE
-        sameSite: 'Lax',
+        sameSite: 'None',
         maxAge: 3600,
         path: '/',
         domain: 'clientes.salvadorsv.com',
