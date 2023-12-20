@@ -21,7 +21,7 @@ const getInternationalCodes = require('./dropdown_services/countryCodes');
 const app = express();
 const port = process.env.PORT || 3000;
 const corsOptions = {
-  origin: 'https://clientes.salvadorsv.com', // Trabajar en entornos de producción
+  origin: 'https://clientes.salvadorsv.com/', // Trabajar en entornos de producción
   //origin: 'http://localhost:4200',  // Trabajar en entornos locales
   credentials: true, // Habilita el intercambio de cookies entre el servidor y el cliente
 };
