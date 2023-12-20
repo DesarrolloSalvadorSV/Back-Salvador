@@ -37,6 +37,7 @@ async function login(username, password, res) {
         console.log("Entrando en res y setHeader function");
         // Establece la cookie en la respuesta (res) si res está presente
         res.setHeader('Set-Cookie', userApiKeyCookie);
+        console.log("Ya se debió settear la cookie de userApiKeyCookie", userApiKeyCookie);
         return {
           success: true,
         };
