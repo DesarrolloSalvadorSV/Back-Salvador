@@ -20,15 +20,13 @@ const getInternationalCodes = require('./dropdown_services/countryCodes');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const corsOptions = {
-  origin: 'https://clientes.salvadorsv.com/', // Trabajar en entornos de producción
-  //origin: 'http://localhost:4200',  // Trabajar en entornos locales
-  credentials: true, // Habilita el intercambio de cookies entre el servidor y el cliente
-};
 
 // Middleware para manejar solicitudes JSON
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: 'https://clientes.salvadorsv.com',
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
