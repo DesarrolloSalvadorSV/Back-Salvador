@@ -28,6 +28,7 @@ async function login(username, password, res) {
         sameSite: 'Lax',
         maxAge: 3600,
         path: '/',
+        domain: 'clientes.salvadorsv.com',
       });
 
       // Verifica que res esté definido antes de intentar usarlo
