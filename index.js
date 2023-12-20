@@ -32,6 +32,7 @@ app.use(cookieParser());
 
 // Middleware para configurar Access-Control-Allow-Credentials en todas las respuestas CORS
 app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://clientes.salvadorsv.com');
   res.header('Access-Control-Allow-Credentials', true);
   next();
 });
@@ -124,7 +125,7 @@ app.get('/get-send-transactions', async (req, res) => {
     res.json(sendsFrom);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error en la solicitud GET de envíos desde.');
+    res.status(500).send('Error en la solicitud GET de transacciones realizados.');
   }
 });
 
@@ -135,7 +136,7 @@ app.get('/get-received-transactions', async (req, res) => {
     res.json(sendsTo);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error en la solicitud GET de envíos hacia.');
+    res.status(500).send('Error en la solicitud GET de transacciones recibidas.');
   }
 });
 
