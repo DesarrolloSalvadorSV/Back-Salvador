@@ -21,7 +21,8 @@ const getInternationalCodes = require('./dropdown_services/countryCodes');
 const app = express();
 const port = process.env.PORT || 3000;
 const corsOptions = {
-  origin: 'https://clientes.salvadorsv.com', // Update this to your frontend URL
+  //origin: 'https://clientes.salvadorsv.com', // Update this to your frontend URL
+  origin: 'https://ba6b-177-222-98-248.ngrok-free.app',
   credentials: true,
 };
 
