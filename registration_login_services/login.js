@@ -29,7 +29,7 @@ async function login(username, password, res) {
         sameSite: 'None',
         maxAge: 3600,
         path: '/',
-        //domain: 'clientes.salvadorsv.com',
+        domain: 'clientes.salvadorsv.com',
         //domain: 'ba6b-177-222-98-248.ngrok-free.app',
       });
 
