@@ -59,6 +59,7 @@ app.post('/register-users', async (req, res) => {
       requestData.passportNumber,
       requestData.email,
       requestData.promoCod,
+      requestData.company
     );
 
     if (success) {
