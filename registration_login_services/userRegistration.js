@@ -4,7 +4,7 @@ const cleanCountryCode = require('../formatting_services/transformCountryFormat'
 
 const xapiKey = 'NWMxNzlmNGEtYTFiOS00OTQ1LWEwZmItMmMzZmM5NTM0ZDE3OlN2ZXgwNzcwQGdtYWlsLmNvbTpQQHNzdzByZA==';
 
-async function userRegistration(username, password, country, currency, countryCode, phoneNumber, firstName, lastName, address, city, birthDate, documentType, documentNumber, passportNumber, email,promoCod) {
+async function userRegistration(username, password, country, currency, countryCode, phoneNumber, firstName, lastName, address, city, birthDate, documentType, documentNumber, passportNumber, email,promoCod,company) {
   try {
     // Limpiar el código de marcación
     const cleanedNumberPhone = cleanCountryCode(countryCode, phoneNumber);
@@ -24,7 +24,11 @@ async function userRegistration(username, password, country, currency, countryCo
         username: username,
         password: password,
         roles: 'user',
-        scope: 'own'
+        scope: 'own',
+   data: {
+        referral_code: promoCod,
+        referral_by: company
+    }
       })
     };
 
